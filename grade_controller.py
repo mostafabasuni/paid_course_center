@@ -1,0 +1,39 @@
+from course_center_db import Grade
+
+class GradeService:
+    def __init__(self):
+        pass
+
+    
+    def create_grade(self, name, level, term, academic_year):
+        try:
+            grade = Grade.create(name=name,                    
+                    level=level,
+                    term=term,
+                    academic_year=academic_year)
+            return True, "تم إنشاء الصف بنجاح"
+        except Exception as e:
+            return False, f"خطأ تكرار بيانات"
+
+    def update_grade(self, grade_id, name, level, term, academic_year):
+        try:
+            grade = Grade.get(Grade.id == grade_id)            
+            grade.name = name
+            grade.level = level
+            grade.term = term
+            grade.academic_year = academic_year
+            grade.save()
+            return True, "تم تحديث بيانات الصف بنجاح"
+        
+        except Exception as e:
+            return False, f"حدث خطأ أثناء التحديث: {str(e)}"
+
+    def delete_grade(self, id):
+        try:
+            grade = Grade.get_by_id(id)
+            grade.delete_instance()
+            return True, "تم حذف الصف بنجاح"
+        except Grade.DoesNotExist:
+            return False, "الصف غير موجود"
+        except Exception as e:
+            return False, f"حدث خطأ أثناء الحذف: {str(e)}"
