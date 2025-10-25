@@ -2530,11 +2530,15 @@ class Main(QtWidgets.QMainWindow):
             # 1) اختيار الطالب من واجهتك
             student_name = self.comboBox_18.currentText().strip()
             month = self.comboBox_21.currentText().strip()
+            amount_paid = Decimal(self.lineEdit_39.text().strip())
             if not student_name:
                 QtWidgets.QMessageBox.warning(self, "خطأ", "يرجى اختيار طالب من القائمة.")
                 return
             if not month:
                 QtWidgets.QMessageBox.warning(self, "خطأ", "يرجى اختيار الشهر من القائمة.")
+                return
+            if amount_paid <= 0:
+                QtWidgets.QMessageBox.warning(self, "خطأ", "المبلغ المدفوع يجب أن يكون أكبر من صفر.")
                 return
             
             # 2) جلب الكائنات من قاعدة البيانات 
